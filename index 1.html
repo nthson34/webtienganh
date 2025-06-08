@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Học Tiếng Anh Thật Vui!</title>
+    <!-- Tailwind CSS CDN for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Inter Font from Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <!-- React and ReactDOM CDNs -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <!-- Babel for in-browser JSX transformation -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <style>
+      /* Custom styles if needed, but Tailwind is preferred */
+      body {
+        font-family: 'Inter', sans-serif;
+      }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-200 to-purple-300 min-h-screen flex flex-col items-center justify-center p-4">
+    <div id="root"></div>
+
+    <script type="text/babel">
+        // Main App component for the interactive English learning website
+        function App() {
+          // Define 100 vocabulary words. No imageUrl is used here, illustration is done via text/color.
+          const vocabulary = [
+            // Animals (10 words)
+            { english: 'Cat', vietnamese: 'Mèo' },
+            { english: 'Dog', vietnamese: 'Chó' },
+            { english: 'Bird', vietnamese: 'Chim' },
+            { english: 'Fish', vietnamese: 'Cá' },
+            { english: 'Lion', vietnamese: 'Sư tử' },
+            { english: 'Elephant', vietnamese: 'Voi' },
+            { english: 'Monkey', vietnamese: 'Khỉ' },
+            { english: 'Bear', vietnamese: 'Gấu' },
+            { english: 'Rabbit', vietnamese: 'Thỏ' },
+            { english: 'Tiger', vietnamese: 'Hổ' },
+            // Fruits (10 words)
+            { english: 'Apple', vietnamese: 'Quả táo' },
+            { english: 'Banana', vietnamese: 'Quả chuối' },
+            { english: 'Orange', vietnamese: 'Quả cam' },
+            { english: 'Grape', vietnamese: 'Quả nho' },
+            { english: 'Strawberry', vietnamese: 'Dâu tây' },
+            { english: 'Mango', vietnamese: 'Xoài' },
+            { english: 'Pineapple', vietnamese: 'Dứa' },
+            { english: 'Watermelon', vietnamese: 'Dưa hấu' },
+            { english: 'Cherry', vietnamese: 'Anh đào' },
+            { english: 'Kiwi', vietnamese: 'Kiwi' },
+            // Vegetables (10 words)
+            { english: 'Carrot', vietnamese: 'Cà rốt' },
+            { english: 'Tomato', vietnamese: 'Cà chua' },
+            { english: 'Potato', vietnamese: 'Khoai tây' },
+            { english: 'Broccoli', vietnamese: 'Bông cải xanh' },
+            { english: 'Onion', vietnamese: 'Hành tây' },
+            { english: 'Cucumber', vietnamese: 'Dưa chuột' },
+            { english: 'Pepper', vietnamese: 'Ớt chuông' },
+            { english: 'Cabbage', vietnamese: 'Bắp cải' },
+            { english: 'Corn', vietnamese: 'Ngô' },
+            { english: 'Lettuce', vietnamese: 'Xà lách' },
+            // Family (10 words)
+            { english: 'Mother', vietnamese: 'Mẹ' },
+            { english: 'Father', vietnamese: 'Bố' },
+            { english: 'Brother', vietnamese: 'Anh/Em trai' },
+            { english: 'Sister', vietnamese: 'Chị/Em gái' },
+            { english: 'Grandmother', vietnamese: 'Bà' },
+            { english: 'Grandfather', vietnamese: 'Ông' },
+            { english: 'Baby', vietnamese: 'Em bé' },
+            { english: 'Family', vietnamese: 'Gia đình' },
+            { english: 'Aunt', vietnamese: 'Cô/Dì' },
+            { english: 'Uncle', vietnamese: 'Chú/Cậu' },
+            // Body Parts (10 words)
+            { english: 'Head', vietnamese: 'Đầu' },
+            { english: 'Hand', vietnamese: 'Bàn tay' },
+            { english: 'Foot', vietnamese: 'Bàn chân' },
+            { english: 'Eye', vietnamese: 'Mắt' },
+            { english: 'Ear', vietnamese: 'Tai' },
+            { english: 'Nose', vietnamese: 'Mũi' },
+            { english: 'Mouth', vietnamese: 'Miệng' },
+            { english: 'Arm', vietnamese: 'Cánh tay' },
+            { english: 'Leg', vietnamese: 'Chân' },
+            { english: 'Hair', vietnamese: 'Tóc' },
+            // Clothes (10 words)
+            { english: 'Shirt', vietnamese: 'Áo sơ mi' },
+            { english: 'Pants', vietnamese: 'Quần dài' },
+            { english: 'Dress', vietnamese: 'Váy' },
+            { english: 'Shoes', vietnamese: 'Giày' },
+            { english: 'Hat', vietnamese: 'Mũ' },
+            { english: 'Socks', vietnamese: 'Tất' },
+            { english: 'Coat', vietnamese: 'Áo khoác' },
+            { english: 'Skirt', vietnamese: 'Chân váy' },
+            { english: 'T-shirt', vietnamese: 'Áo phông' },
+            { english: 'Jacket', vietnamese: 'Áo jacket' },
+            // School Objects (10 words)
+            { english: 'Book', vietnamese: 'Sách' },
+            { english: 'Pen', vietnamese: 'Bút mực' },
+            { english: 'Pencil', vietnamese: 'Bút chì' },
+            { english: 'Eraser', vietnamese: 'Tẩy' },
+            { english: 'Ruler', vietnamese: 'Thước kẻ' },
+            { english: 'Bag', vietnamese: 'Cặp sách' },
+            { english: 'Desk', vietnamese: 'Bàn học' },
+            { english: 'Chair', vietnamese: 'Ghế' },
+            { english: 'Notebook', vietnamese: 'Vở' },
+            { english: 'Scissors', vietnamese: 'Kéo' },
+            // Professions (10 words)
+            { english: 'Teacher', vietnamese: 'Giáo viên' },
+            { english: 'Doctor', vietnamese: 'Bác sĩ' },
+            { english: 'Police Officer', vietnamese: 'Cảnh sát' },
+            { english: 'Firefighter', vietnamese: 'Lính cứu hỏa' },
+            { english: 'Chef', vietnamese: 'Đầu bếp' },
+            { english: 'Pilot', vietnamese: 'Phi công' },
+            { english: 'Artist', vietnamese: 'Họa sĩ' },
+            { english: 'Engineer', vietnamese: 'Kỹ sư' },
+            { english: 'Farmer', vietnamese: 'Nông dân' },
+            { english: 'Student', vietnamese: 'Học sinh' },
+            // Vehicles (10 words)
+            { english: 'Car', vietnamese: 'Ô tô' },
+            { english: 'Bicycle', vietnamese: 'Xe đạp' },
+            { english: 'Motorcycle', vietnamese: 'Xe máy' },
+            { english: 'Bus', vietnamese: 'Xe buýt' },
+            { english: 'Train', vietnamese: 'Tàu hỏa' },
+            { english: 'Airplane', vietnamese: 'Máy bay' },
+            { english: 'Boat', vietnamese: 'Thuyền' },
+            { english: 'Truck', vietnamese: 'Xe tải' },
+            { english: 'Helicopter', vietnamese: 'Máy bay trực thăng' },
+            { english: 'Tractor', vietnamese: 'Máy kéo' },
+            // Actions/Verbs (10 words)
+            { english: 'Run', vietnamese: 'Chạy' },
+            { english: 'Jump', vietnamese: 'Nhảy' },
+            { english: 'Eat', vietnamese: 'Ăn' },
+            { english: 'Drink', vietnamese: 'Uống' },
+            { english: 'Sleep', vietnamese: 'Ngủ' },
+            { english: 'Read', vietnamese: 'Đọc' },
+            { english: 'Write', vietnamese: 'Viết' },
+            { english: 'Sing', vietnamese: 'Hát' },
+            { english: 'Dance', vietnamese: 'Nhảy múa' },
+            { english: 'Play', vietnamese: 'Chơi' },
+            // Colors (10 words) - These words will be illustrated by their actual color on the box background.
+            { english: 'Red', vietnamese: 'Màu đỏ' },
+            { english: 'Blue', vietnamese: 'Màu xanh dương' },
+            { english: 'Green', vietnamese: 'Màu xanh lá' },
+            { english: 'Yellow', vietnamese: 'Màu vàng' },
+            { english: 'Orange', vietnamese: 'Màu cam' },
+            { english: 'Purple', vietnamese: 'Màu tím' },
+            { english: 'Pink', vietnamese: 'Màu hồng' },
+            { english: 'Black', vietnamese: 'Màu đen' },
+            { english: 'White', vietnamese: 'Màu trắng' },
+            { english: 'Brown', vietnamese: 'Màu nâu' },
+          ];
+
+          // Define a mapping for color words to their hexadecimal color codes
+          const colorMap = {
+            Red: '#FF0000', Blue: '#0000FF', Green: '#00FF00', Yellow: '#FFFF00', Orange: '#FFA500',
+            Purple: '#800080', Pink: '#FFC0CB', Black: '#000000', White: '#FFFFFF', Brown: '#A52A2A'
+          };
+          // List of English words that are colors, for quick lookup
+          const colorWords = Object.keys(colorMap);
+
+          // State to hold the shuffled version of vocabulary for the current session
+          const [shuffledVocabulary, setShuffledVocabulary] = useState([]);
+          // State to track the index within the shuffledVocabulary
+          const [currentShuffledIndex, setCurrentShuffledIndex] = useState(0);
+          // State to store the SpeechSynthesisUtterance instance for pronunciation
+          const [utterance, setUtterance] = useState(null);
+          // State to track if speech synthesis is ready
+          const [isSpeechReady, setIsSpeechReady] = useState(false);
+
+          // State to manage current game mode: 'flashcard', 'visual_quiz', 'audio_quiz'
+          const [gameMode, setGameMode] = useState('flashcard');
+
+          // States for Quiz/Game modes
+          const [quizOptions, setQuizOptions] = useState([]); // Stores the shuffled options for the current question
+          const [selectedAnswer, setSelectedAnswer] = useState(null); // Stores the answer selected by the user (null if not yet answered)
+          const [score, setScore] = useState(0); // Tracks the number of correct answers
+          const [totalQuestions, setTotalQuestions] = useState(0); // Tracks the total number of questions attempted
+
+          // Get the current word object based on the currentShuffledIndex
+          const currentWord = shuffledVocabulary[currentShuffledIndex];
+
+          // Function to shuffle the vocabulary and reset index
+          const shuffleAndSetNewWord = () => {
+            const tempVocab = [...vocabulary]; // Create a mutable copy
+            // Fisher-Yates shuffle algorithm
+            for (let i = tempVocab.length - 1; i > 0; i--) {
+              const j = Math.floor(Math.random() * (i + 1));
+              [tempVocab[i], tempVocab[j]] = [tempVocab[j], tempVocab[i]];
+            }
+            setShuffledVocabulary(tempVocab);
+            setCurrentShuffledIndex(0);
+          };
+
+          // Hook useEffect to initialize SpeechSynthesisUtterance and shuffle vocabulary on component mount
+          useEffect(() => {
+            if ('speechSynthesis' in window) {
+              const synthUtterance = new SpeechSynthesisUtterance();
+              synthUtterance.lang = 'en-US'; // Set language to US English for pronunciation
+              synthUtterance.rate = 0.8; // Set a slightly slower rate for better clarity for kids
+              setUtterance(synthUtterance);
+
+              // Listen for voices to be loaded, ensures speech synthesis is ready
+              window.speechSynthesis.onvoiceschanged = () => {
+                setIsSpeechReady(true);
+              };
+              // If voices are already loaded (e.g., on subsequent renders), set it ready immediately
+              if (window.speechSynthesis.getVoices().length > 0) {
+                setIsSpeechReady(true);
+              }
+            } else {
+              console.warn('Trình duyệt này không hỗ trợ chức năng phát âm.');
+            }
+            shuffleAndSetNewWord(); // Initial shuffle when component mounts
+          }, []);
+
+          // Effect to generate options when the current word or game mode changes
+          useEffect(() => {
+            if (gameMode === 'visual_quiz' || gameMode === 'audio_quiz') {
+              generateGameOptions();
+            }
+            // Reset selected answer when word/mode changes to prepare for a new question
+            setSelectedAnswer(null);
+          }, [currentShuffledIndex, gameMode, shuffledVocabulary]); // Added shuffledVocabulary as dependency
+
+          // Function to pronounce the current English word
+          const speakWord = () => {
+            if (utterance && isSpeechReady && currentWord) {
+              utterance.text = currentWord.english;
+              window.speechSynthesis.speak(utterance);
+            } else {
+              console.warn('Chức năng phát âm chưa sẵn sàng hoặc không được hỗ trợ.');
+            }
+          };
+
+          // Function to move to the next word in the shuffled vocabulary
+          const nextWord = () => {
+            setCurrentShuffledIndex((prevIndex) => {
+              const nextIdx = (prevIndex + 1);
+              if (nextIdx >= shuffledVocabulary.length) {
+                // All words shown, reshuffle and start over
+                shuffleAndSetNewWord();
+                return 0; // Go to the first word of the newly shuffled list
+              }
+              return nextIdx;
+            });
+          };
+
+          // Function to move to the previous word in the shuffled vocabulary (only for Flashcard mode)
+          const prevWord = () => {
+            setCurrentShuffledIndex((prevIndex) => (prevIndex - 1 + shuffledVocabulary.length) % shuffledVocabulary.length);
+          };
+
+          // Function to generate multiple-choice options for both Visual Quiz and Audio Quiz
+          const generateGameOptions = () => {
+            const correctWord = currentWord.english;
+            // Get all unique English words from the full vocabulary for distractors
+            // Use a Set to ensure uniqueness and then convert back to array
+            const allEnglishWords = [...new Set(vocabulary.map(word => word.english))];
+            let options = [correctWord]; // Start with the correct answer
+
+            // Filter out the correct word to pick distractors
+            const potentialDistractors = allEnglishWords.filter(word => word !== correctWord);
+
+            // Randomly pick 2 distractors (or fewer if less than 3 unique words are available)
+            while (options.length < 3 && potentialDistractors.length > 0) {
+              const randomIndex = Math.floor(Math.random() * (potentialDistractors.length));
+              options.push(potentialDistractors.splice(randomIndex, 1)[0]); // Add and remove to prevent duplicates
+            }
+
+            // Shuffle the options to randomize their order
+            setQuizOptions(options.sort(() => Math.random() - 0.5));
+          };
+
+          // Function to handle answer click in quiz/game mode
+          const handleAnswerClick = (answer) => {
+            if (selectedAnswer) return; // Prevent multiple clicks on options for the same question
+
+            setSelectedAnswer(answer); // Mark the selected answer
+            if (answer === currentWord.english) {
+              setScore(prevScore => prevScore + 1); // Increment score if correct
+            }
+            setTotalQuestions(prevTotal => prevTotal + 1); // Increment total questions attempted
+          };
+
+          // Function to reset the current game mode
+          const resetGame = () => {
+            setScore(0);
+            setTotalQuestions(0);
+            shuffleAndSetNewWord(); // Reshuffle and start from the beginning of a new random sequence
+            setSelectedAnswer(null);
+          };
+
+          // Function to move to the next question in game modes
+          const nextGameQuestion = () => {
+            nextWord(); // Move to the next word in the shuffled vocabulary
+            setSelectedAnswer(null); // Reset selected answer to allow interaction for the new question
+          };
+
+          // Function to change the current game mode
+          const changeGameMode = (mode) => {
+            setGameMode(mode);
+            // Reset game state when switching modes to ensure a fresh start
+            setScore(0);
+            setTotalQuestions(0);
+            setCurrentShuffledIndex(0); // Go back to the first word/question of the current shuffled sequence
+            setSelectedAnswer(null);
+            if (mode !== 'flashcard') { // Only generate options if entering a quiz/game mode
+              shuffleAndSetNewWord(); // Reshuffle for a new game session
+              // generateGameOptions is called by useEffect based on currentShuffledIndex and gameMode
+            }
+          };
+
+          // Calculate progress percentage based on the current index in the shuffled vocabulary
+          const progressPercentage = (shuffledVocabulary.length > 0)
+            ? ((currentShuffledIndex + 1) / shuffledVocabulary.length) * 100
+            : 0;
+
+          return (
+            <div className="min-h-screen bg-gradient-to-br from-blue-200 to-purple-300 flex flex-col items-center justify-center p-4 font-inter">
+              {/* Page Title */}
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-blue-800 mb-8 drop-shadow-lg text-center">
+                Học Tiếng Anh Thật Vui!
+              </h1>
+
+              {/* Mode Toggle Buttons */}
+              <div className="flex flex-wrap justify-center gap-4 mb-8">
+                <button
+                  onClick={() => changeGameMode('flashcard')}
+                  className={`px-6 py-3 rounded-full font-semibold text-xl shadow-lg transition-all duration-200 transform hover:scale-105 focus:outline-none focus:ring-4
+                    ${gameMode === 'flashcard' ? 'bg-indigo-600 text-white ring-indigo-300' : 'bg-indigo-400 text-white hover:bg-indigo-500 ring-transparent'}`}
+                >
+                  Thẻ Từ
+                </button>
+                <button
+                  onClick={() => changeGameMode('visual_quiz')}
+                  className={`px-6 py-3 rounded-full font-semibold text-xl shadow-lg transition-all duration-200 transform hover:scale-105 focus:outline-none focus:ring-4
+                    ${gameMode === 'visual_quiz' ? 'bg-purple-600 text-white ring-purple-300' : 'bg-purple-500 text-white hover:bg-purple-600 ring-transparent'}`}
+                >
+                  Trò chơi Hình ảnh & Từ
+                </button>
+                <button
+                  onClick={() => changeGameMode('audio_quiz')}
+                  className={`px-6 py-3 rounded-full font-semibold text-xl shadow-lg transition-all duration-200 transform hover:scale-105 focus:outline-none focus:ring-4
+                    ${gameMode === 'audio_quiz' ? 'bg-teal-600 text-white ring-teal-300' : 'bg-teal-500 text-white hover:bg-teal-600 ring-transparent'}`}
+                >
+                  Trò chơi Nghe & Chọn
+                </button>
+              </div>
+
+              {/* Progress Bar */}
+              {(shuffledVocabulary.length > 0) && ( // Only show if vocabulary is loaded
+                <div className="w-full max-w-sm md:max-w-md lg:max-w-lg bg-gray-200 rounded-full h-4 mb-6 overflow-hidden shadow-inner">
+                  <div
+                    className="bg-green-500 h-full rounded-full transition-all duration-500 ease-out"
+                    style={{ width: `${progressPercentage}%` }}
+                  ></div>
+                </div>
+              )}
+
+
+              {currentWord ? ( // Ensure currentWord is loaded before rendering UI
+                <>
+                  {gameMode === 'visual_quiz' ? (
+                    // Visual Quiz Mode UI
+                    <div className="bg-white rounded-3xl shadow-2xl p-6 md:p-8 lg:p-10 w-full max-w-sm md:max-w-md lg:max-w-lg flex flex-col items-center transform transition-transform duration-300 hover:scale-105">
+                      <h2 className="text-3xl md:text-4xl font-bold text-gray-700 mb-6 text-center">
+                        Từ nào có nghĩa là "{currentWord.vietnamese}"?
+                      </h2>
+                      {/* Removed the illustrative box for visual_quiz */}
+
+                      <div className="grid grid-cols-1 gap-4 w-full mb-6">
+                        {quizOptions.map((option, idx) => (
+                          <button
+                            key={idx}
+                            onClick={() => handleAnswerClick(option)}
+                            disabled={selectedAnswer !== null} // Disable buttons after an answer is selected
+                            className={`py-3 px-5 rounded-full font-semibold text-xl shadow-md transition-all duration-200
+                              ${selectedAnswer === null
+                                ? 'bg-blue-500 hover:bg-blue-600 text-white' // Default state
+                                : option === currentWord.english && option === selectedAnswer
+                                  ? 'bg-green-500 text-white' // Correct and selected
+                                  : option !== currentWord.english && option === selectedAnswer
+                                    ? 'bg-red-500 text-white' // Incorrect and selected
+                                    : option === currentWord.english && selectedAnswer !== null
+                                      ? 'bg-green-300 text-gray-800' // Correct but not selected (show hint after selection)
+                                      : 'bg-gray-300 text-gray-600 cursor-not-allowed' // Other non-selected
+                              }
+                              ${selectedAnswer && 'opacity-75'} // Dim other buttons slightly after selection
+                            `}
+                          >
+                            {option}
+                          </button>
+                        ))}
+                      </div>
+
+                      {selectedAnswer && ( // Show feedback and next button only after an answer is selected
+                        <div className="mt-4 text-center flex flex-col items-center">
+                          {selectedAnswer === currentWord.english ? (
+                            <p className="text-green-700 text-2xl font-bold mb-4">Chính xác! 🎉</p>
+                          ) : (
+                            <p className="text-red-700 text-2xl font-bold mb-4">Sai rồi! Hãy thử lại. 😅</p>
+                          )}
+                          <div className="flex flex-col md:flex-row gap-4">
+                            <button
+                              onClick={speakWord}
+                              className="px-6 py-3 rounded-full font-semibold text-lg bg-indigo-500 text-white shadow-lg hover:bg-indigo-600 transition-all duration-200 focus:outline-none focus:ring-4 focus:ring-indigo-300"
+                            >
+                              Nghe lại từ đúng
+                            </button>
+                            <button
+                              onClick={nextGameQuestion}
+                              className="px-6 py-3 rounded-full font-semibold text-lg bg-blue-500 text-white shadow-lg hover:bg-blue-600 transition-all duration-200 focus:outline-none focus:ring-4 focus:ring-blue-300"
+                            >
+                              Câu hỏi tiếp theo
+                            </button>
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Game Score Display */}
+                      <p className="text-xl md:text-2xl font-semibold text-gray-700 mt-6">
+                        Điểm: {score} / {totalQuestions}
+                      </p>
+                      {/* Reset Game Button */}
+                      <button
+                        onClick={resetGame}
+                        className="mt-4 px-6 py-3 rounded-full font-semibold text-lg bg-gray-500 text-white shadow-lg hover:bg-gray-600 transition-all duration-200 focus:outline-none focus:ring-4 focus:ring-gray-300"
+                      >
+                        Chơi lại Hình ảnh & Từ
+                      </button>
+                    </div>
+                  ) : gameMode === 'audio_quiz' ? (
+                    // Audio Quiz Mode UI (Listen & Choose)
+                    <div className="bg-white rounded-3xl shadow-2xl p-6 md:p-8 lg:p-10 w-full max-w-sm md:max-w-md lg:max-w-lg flex flex-col items-center transform transition-transform duration-300 hover:scale-105">
+                      <h2 className="text-3xl md:text-4xl font-bold text-gray-700 mb-6 text-center">
+                        Bạn nghe từ nào?
+                      </h2>
+                      {/* Removed the illustrative box for audio_quiz */}
+                      {/* Listen button for the audio quiz */}
+                      <button
+                        onClick={speakWord}
+                        disabled={!isSpeechReady}
+                        className="flex items-center px-8 py-4 bg-green-500 hover:bg-green-600 text-white font-semibold text-xl rounded-full shadow-lg transform transition-all duration-200 hover:scale-105 hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-green-300 disabled:opacity-50 disabled:cursor-not-allowed mb-6"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="h-7 w-7 mr-3"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M17.293 13.293A8 8 0 0120 10a8 8 0 01-2.707-6.707A8 8 0 0012 4c-3.111 0-5.69 1.769-6.494 4.195l-.161.493a8 8 0 00-2.455 3.313A8 8 0 0012 16c3.111 0 5.69-1.769 6.494-4.195l.161-.493a8 8 0 002.455-3.313z"
+                          />
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M9 13H7V9h2a2 2 0 012 2v2a2 2 0 01-2 2z" />
+                        </svg>
+                        Nghe từ
+                      </button>
+
+                      <div className="grid grid-cols-1 gap-4 w-full mb-6">
+                        {quizOptions.map((option, idx) => (
+                          <button
+                            key={idx}
+                            onClick={() => handleAnswerClick(option)}
+                            disabled={selectedAnswer !== null} // Disable buttons after an answer is selected
+                            className={`py-3 px-5 rounded-full font-semibold text-xl shadow-md transition-all duration-200
+                              ${selectedAnswer === null
+                                ? 'bg-blue-500 hover:bg-blue-600 text-white' // Default state
+                                : option === currentWord.english && option === selectedAnswer
+                                  ? 'bg-green-500 text-white' // Correct and selected
+                                  : option !== currentWord.english && option === selectedAnswer
+                                    ? 'bg-red-500 text-white' // Incorrect and selected
+                                    : option === currentWord.english && selectedAnswer !== null
+                                      ? 'bg-green-300 text-gray-800' // Correct but not selected (show hint after selection)
+                                      : 'bg-gray-300 text-gray-600 cursor-not-allowed' // Other non-selected
+                              }
+                              ${selectedAnswer && 'opacity-75'} // Dim other buttons slightly after selection
+                            `}
+                          >
+                            {option}
+                          </button>
+                        ))}
+                      </div>
+
+                      {selectedAnswer && ( // Show feedback and next button only after an aswer is selected
+                        <div className="mt-4 text-center flex flex-col items-center">
+                          {selectedAnswer === currentWord.english ? (
+                            <p className="text-green-700 text-2xl font-bold mb-4">Chính xác! 🎉</p>
+                          ) : (
+                            <p className="text-red-700 text-2xl font-bold mb-4">Sai rồi! Hãy thử lại. 😅</p>
+                          )}
+                          <div className="flex flex-col md:flex-row gap-4">
+                            <button
+                              onClick={speakWord}
+                              className="px-6 py-3 rounded-full font-semibold text-lg bg-indigo-500 text-white shadow-lg hover:bg-indigo-600 transition-all duration-200 focus:outline-none focus:ring-4 focus:ring-indigo-300"
+                            >
+                              Nghe lại từ đúng
+                            </button>
+                            <button
+                              onClick={nextGameQuestion}
+                              className="px-6 py-3 rounded-full font-semibold text-lg bg-blue-500 text-white shadow-lg hover:bg-blue-600 transition-all duration-200 focus:outline-none focus:ring-4 focus:ring-ring-blue-300"
+                            >
+                              Câu hỏi tiếp theo
+                            </button>
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Game Score Display */}
+                      <p className="text-xl md:text-2xl font-semibold text-gray-700 mt-6">
+                        Điểm: {score} / {totalQuestions}
+                      </p>
+                      {/* Reset Game Button */}
+                      <button
+                        onClick={resetGame}
+                        className="mt-4 px-6 py-3 rounded-full font-semibold text-lg bg-gray-500 text-white shadow-lg hover:bg-gray-600 transition-all duration-200 focus:outline-none focus:ring-4 focus:ring-gray-300"
+                      >
+                        Chơi lại Nghe & Chọn
+                      </button>
+                    </div>
+                  ) : (
+                    // Flashcard Mode UI
+                    <div className="bg-white rounded-3xl shadow-2xl p-6 md:p-8 lg:p-10 w-full max-w-sm md:max-w-md lg:max-w-lg flex flex-col items-center transform transition-transform duration-300 hover:scale-105">
+                      {/* Image replacement with dynamic content for Flashcard */}
+                      {(() => {
+                        const isColorWord = colorWords.includes(currentWord.english);
+                        const textColor = (currentWord.english === 'Black' || currentWord.english === 'Purple' || currentWord.english === 'Brown') ? 'white' : 'black';
+                        return (
+                          <div
+                            className={`flex items-center justify-center w-48 h-48 md:w-56 md:h-56 lg:w-64 lg:h-64 rounded-xl mb-6 border-4 shadow-md
+                              ${isColorWord ? 'border-transparent' : 'border-purple-400'}
+                            `}
+                            style={isColorWord ? { backgroundColor: colorMap[currentWord.english], color: textColor } : {}}
+                          >
+                            <span className={`font-bold text-center px-2 select-none ${isColorWord ? 'text-2xl md:text-3xl lg:text-4xl uppercase' : 'text-4xl md:text-5xl lg:text-6xl text-gray-700'}`}>
+                              {currentWord.english}
+                            </span>
+                          </div>
+                        );
+                      })()}
+
+                      {/* English Word */}
+                      <p className="text-5xl md:text-6xl lg:text-7xl font-bold text-gray-800 mb-2 select-none tracking-wide">
+                        {currentWord.english}
+                      </p>
+
+                      {/* Vietnamese Translation */}
+                      <p className="text-2xl md:text-3xl lg:text-4xl text-gray-600 mb-6 select-none italic">
+                        {currentWord.vietnamese}
+                      </p>
+
+                      {/* Action Buttons */}
+                      <div className="flex space-x-4 md:space-x-6 w-full justify-center">
+                        {/* Previous Button */}
+                        <button
+                          onClick={prevWord}
+                          className="flex items-center px-6 py-3 md:px-8 md:py-4 bg-yellow-500 hover:bg-yellow-600 text-white font-semibold text-lg md:text-xl rounded-full shadow-lg transform transition-all duration-200 hover:scale-105 hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-yellow-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="h-6 w-6 mr-2"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                          >
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+                          </svg>
+                          Trước
+                        </button>
+
+                        {/* Listen Button */}
+                        <button
+                          onClick={speakWord}
+                          disabled={!isSpeechReady}
+                          className="flex items-center px-6 py-3 md:px-8 md:py-4 bg-green-500 hover:bg-green-600 text-white font-semibold text-lg md:text-xl rounded-full shadow-lg transform transition-all duration-200 hover:scale-105 hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-green-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="h-6 w-6 mr-2"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              d="M17.293 13.293A8 8 0 0120 10a8 8 0 01-2.707-6.707A8 8 0 0012 4c-3.111 0-5.69 1.769-6.494 4.195l-.161.493a8 8 0 00-2.455 3.313A8 8 0 0012 16c3.111 0 5.69-1.769 6.494-4.195l.161-.493a8 8 0 002.455-3.313z"
+                            />
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M9 13H7V9h2a2 2 0 012 2v2a2 2 0 01-2 2z" />
+                          </svg>
+                          Nghe
+                        </button>
+
+                        {/* Next Button */}
+                        <button
+                          onClick={nextWord}
+                          className="flex items-center px-6 py-3 md:px-8 md:py-4 bg-blue-500 hover:bg-blue-600 text-white font-semibold text-lg md:text-xl rounded-full shadow-lg transform transition-all duration-200 hover:scale-105 hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-blue-300"
+                        >
+                          Tiếp theo
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="h-6 w-6 ml-2"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                          >
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                          </svg>
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                </>
+              ) : (
+                // Loading or initial state if shuffledVocabulary is not yet populated
+                <div className="text-xl text-gray-700">Đang tải từ vựng...</div>
+              )}
+
+              {/* Footer / Copyright (Optional) */}
+              <p className="text-gray-600 text-sm mt-8 opacity-75">
+                &copy; 2025 Trang Web Học Tiếng Anh. Dành cho các bé.
+              </p>
+            </div>
+          );
+        }
+
+        // Render the App component into the 'root' div
+        ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+    </script>
+</body>
+</html>
